@@ -2,17 +2,20 @@
 MQ relay module
 
 	Prereq:		python2.6
-						pymqi
-						Running QMA and queue
+				pymqi
+				Running QM and queue
+				Environment variable specifying QM 
 
 	Usage:		To put a message to queue:
-						python q.py + {message}
+						python q.py {message}
 				To retrieve a message from a queue:
 						python q.py
 """
 
 import sys
 import pymqi
+from pymqi 		import *
+from termcolor 	import colored
 
 """
 Read the recent message from a queue
@@ -31,18 +34,25 @@ def push_queue(qmgr,queue,message):
 
 
 if __name__ == "__main__":
-	# Read queue configurations from config file
-	# TAOTODO:
-	qma 		= 'QMA'
-	channel 	= None
-	qaddress 	= 'localhost(1434)'
-	qname 		= 'Q1';
 
-	qmgr = pymqi.connect(qma, channel, qaddress)
+	# TAOTODO: Read these settings from the conf
+	qchannel		= 'SYSTEM.DEF.SVRCONN'
+	qmanager_name	= 'QMA'
+	qname 			= 'Q1'
+	qserver			= 'localhost(1414)'
 
+	# Set up connection
+	print colored('Establishing connection','green')
+	print colored('   server: ','yellow') + ' ' + qserver
+	print colored('   queue mgr: ','yellow') + ' ' + qmanager_name
+	print colored('   queue name: ','yellow') + ' ' + qname
+	qmgr = pymqi.connect(qmanager_name, qchannel, qserver)
+	
 	# Now do something with the queue manager
-	if len(sys.argv)>1 and sys.argv[1]=='+':
+	if len(sys.argv)>1:
 		# push a message to the queue
+		print colored("Pushing...","cyan")
 		push_queue( qmgr, qname, ' '.join(sys.argv[2:]))
 	else:
+		print colored("Recieving...","cyan")
 		print get_queue( qmgr, qname )
