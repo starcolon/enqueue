@@ -36,16 +36,16 @@ def push_queue(qmgr,queue,message):
 if __name__ == "__main__":
 
 	# TAOTODO: Read these settings from the conf
-	qchannel		= 'SYSTEM.DEF.SVRCONN'
+	qchannel		= None #'SYSTEM.DEF.SVRCONN'
 	qmanager_name	= 'QMA'
 	qname 			= 'Q1'
 	qserver			= 'localhost(1414)'
 
 	# Set up connection
 	print colored('Establishing connection','green')
-	print colored('   server: ','yellow') + ' ' + qserver
-	print colored('   queue mgr: ','yellow') + ' ' + qmanager_name
-	print colored('   queue name: ','yellow') + ' ' + qname
+	print colored('   server     : ','yellow') + qserver
+	print colored('   queue mgr  : ','yellow') + qmanager_name
+	print colored('   queue name : ','yellow') + qname
 	qmgr = pymqi.connect(qmanager_name, qchannel, qserver)
 	
 	# Now do something with the queue manager
