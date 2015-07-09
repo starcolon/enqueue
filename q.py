@@ -1,15 +1,22 @@
 """
 MQ relay module
 
+----------------------------------------------------------
+
 	Prereq:		python2.6
 				pymqi
 				Running QM and queue
 				Environment variable specifying QM 
 
 	Usage:		To put a message to queue:
-						python q.py {message}
+
+					$ python q.py {message}
+
 				To retrieve a message from a queue:
-						python q.py
+
+					$ python q.py
+
+----------------------------------------------------------
 """
 
 import sys
@@ -36,7 +43,7 @@ def push_queue(qmgr,queue,message):
 if __name__ == "__main__":
 
 	# TAOTODO: Read these settings from the conf
-	qchannel		= None #'SYSTEM.DEF.SVRCONN'
+	qchannel		= 'SVRCONN.1' #'SYSTEM.DEF.SVRCONN'
 	qmanager_name	= 'QMA'
 	qname 			= 'Q1'
 	qserver			= 'localhost(1414)'
@@ -46,7 +53,8 @@ if __name__ == "__main__":
 	print colored('   server     : ','yellow') + qserver
 	print colored('   queue mgr  : ','yellow') + qmanager_name
 	print colored('   queue name : ','yellow') + qname
-	qmgr = pymqi.connect(qmanager_name, qchannel, qserver)
+	###qmgr = pymqi.connect(qmanager_name, qchannel, qserver)
+	qmgr = QueueManager(qmanager_name)
 	
 	# Now do something with the queue manager
 	if len(sys.argv)>1:
@@ -56,3 +64,6 @@ if __name__ == "__main__":
 	else:
 		print colored("Recieving...","cyan")
 		print get_queue( qmgr, qname )
+
+	# disconnect from the queue server
+	pymqi.disconnect(qmgr)
