@@ -53,8 +53,8 @@ if __name__ == "__main__":
 	print colored('   server     : ','yellow') + qserver
 	print colored('   queue mgr  : ','yellow') + qmanager_name
 	print colored('   queue name : ','yellow') + qname
-	###qmgr = pymqi.connect(qmanager_name, qchannel, qserver)
-	qmgr = QueueManager(qmanager_name)
+	qmgr = pymqi.connect(qmanager_name, qchannel, qserver)
+	###qmgr = QueueManager(qmanager_name)
 	
 	# Now do something with the queue manager
 	if len(sys.argv)>1:
