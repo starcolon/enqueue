@@ -43,10 +43,10 @@ def push_queue(qmgr,queue,message):
 if __name__ == "__main__":
 
 	# TAOTODO: Read these settings from the conf
-	qchannel		= 'SVRCONN.1' #'SYSTEM.DEF.SVRCONN'
-	qmanager_name	= 'QMA'
-	qname 			= 'Q1'
-	qserver			= 'localhost(1414)'
+	qchannel		= None #'SYSTEM.DEF.SVRCONN'
+	qmanager_name	= '*SMAINQM' #'QMA'
+	qname 			= 'IVR.SERVICEREQUEST.RQ'#'Q1'
+	qserver			= '10.2.16.71' #'localhost(1414)'
 
 	# Set up connection
 	print colored('Establishing connection','green')
